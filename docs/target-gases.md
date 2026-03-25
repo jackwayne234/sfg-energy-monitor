@@ -2,14 +2,18 @@
 
 ## Primary Targets
 
-| Gas | Formula | Absorption Band | Absorption Peak | PPLN Poling Period (est.) | SFG Output | Application |
-|-----|---------|----------------|-----------------|--------------------------|------------|-------------|
-| Methane | CH4 | 3.0-3.5 um | 3.27 um (C-H stretch) | ~18-20 um | ~803 nm | Natural gas leaks, pipeline monitoring, mining |
-| Carbon dioxide | CO2 | 4.2-4.3 um | 4.26 um (asymmetric stretch) | ~20-22 um | ~852 nm | Emissions monitoring, greenhouse gas |
-| Carbon monoxide | CO | 4.5-4.8 um | 4.6 um (fundamental band) | ~21-23 um | ~864 nm | Combustion monitoring, safety |
-| Hydrogen sulfide | H2S | 3.8-4.0 um | 3.85-3.91 um | ~19-21 um | ~830 nm | Sour gas detection, refinery safety |
-| Ethane | C2H6 | 3.3-3.4 um | 3.34-3.35 um | ~18-20 um | ~806 nm | Natural gas composition analysis |
-| Nitric oxide | NO | 5.2-5.4 um | 5.26 um | At edge of PPLN range | ~868 nm | Combustion emissions |
+QPM periods calculated using the Zelmon (1997) Sellmeier equation for MgO:LiNbO3 extraordinary ray at 25C. SFG output calculated via 1/lambda_SFG = 1/lambda_pump + 1/lambda_signal with lambda_pump = 1064 nm.
+
+| Gas | Formula | Absorption Peak | Wavenumber (cm-1) | QPM Period (um) | SFG Output (nm) | Application |
+|-----|---------|-----------------|-------------------|-----------------|-----------------|-------------|
+| Methane | CH4 | 3.31 um (v3 C-H stretch) | 3021 | **22.0** | **805 nm** | Natural gas leaks, pipeline monitoring, mining |
+| Carbon dioxide | CO2 | 4.26 um (v3 asymmetric stretch) | 2347 | **22.9** | **851 nm** | Emissions monitoring, greenhouse gas |
+| Carbon monoxide | CO | 4.67 um (fundamental v=1-0) | 2141 | **22.7** | **867 nm** | Combustion monitoring, safety |
+| Hydrogen sulfide | H2S | 3.98 um (v1 S-H stretch) | 2513 | **22.9** | **840 nm** | Sour gas detection, refinery safety |
+| Ethane | C2H6 | 3.34-3.35 um (v7 C-H stretch) | 2985 | **22.1** | **806 nm** | Natural gas composition analysis |
+| Nitric oxide | NO | 5.26 um (fundamental) | 1901 | **21.8** | **889 nm** | Combustion emissions (at edge of PPLN range) |
+
+**Note:** CO2 and H2S share nearly identical QPM periods (22.9 um). A single crystal could address both with temperature tuning (~0.5 nm/C). All QPM periods fall in the 22-23 um range — standard for commercial PPLN fabrication (Covesion, HC Photonics, AdvR).
 
 ## PPLN Transparency
 
@@ -25,6 +29,21 @@ Actual detection limits depend on path length, pump power, and noise floor. Targ
 | CO2 | ~50 ppm | 0.1-1 ppb | 50 ppm | <10 ppm |
 | CO | ~5-10 ppm | 0.1-1 ppb | 10 ppm | <1 ppm |
 | H2S | ~1-5 ppm | 0.1-1 ppb | 5 ppm | <1 ppm |
+
+### Beer-Lambert Sensitivity Analysis
+
+Using Beer-Lambert (I = I0 * exp(-alpha * C * L)) with a conservative minimum detectable absorbance of 10^-4 (standard Si photodiode + lock-in amplifier):
+
+| Gas | Absorption Cross-Section | LOD @ 1m path | LOD @ 10m | LOD @ 100m |
+|-----|------------------------|--------------|----------|-----------|
+| CH4 | 1.5e-17 cm2 | 2 ppb | 0.2 ppb | 0.02 ppb |
+| CO2 | 1.3e-17 cm2 | 3 ppb | 0.3 ppb | 0.03 ppb |
+| CO | 5.0e-19 cm2 | 74 ppb | 7.4 ppb | 0.74 ppb |
+| H2S | 5.0e-19 cm2 | 74 ppb | 7.4 ppb | 0.74 ppb |
+
+With a Thorlabs HC10L Herriott cell (10.4m effective path), all four primary gases are detectable at low-ppb levels. With lock-in amplification (MDA ~10^-6), these improve by another 100x.
+
+**Prior art validation:** A 2025 paper (arXiv:2601.15981) demonstrated 79.6 ppb CO detection with only a 14 cm path length using this exact approach. Our multi-pass cell (10-31m path) would improve on this by 70-220x. See [Prior Art](prior-art.md) for full citations.
 
 ## Cross-Sensitivity
 

@@ -25,15 +25,17 @@ Part of the **SFG Detection Platform** — same core hardware (PPLN chamber + pu
 
 ## Target Gases
 
-| Gas | Absorption Band | SFG Output (with 1064nm pump) | Application |
-|-----|----------------|------------------------------|-------------|
-| Methane (CH4) | 3.27 um | ~803 nm | Pipeline leaks, mining safety |
-| CO2 | 4.26 um | ~852 nm | Emissions monitoring |
-| CO | 4.6 um | ~864 nm | Combustion monitoring, safety |
-| H2S | 3.85-3.91 um | ~830 nm | Sour gas detection |
-| Ethane | 3.34-3.35 um | ~806 nm | Natural gas composition |
+SFG output calculated via 1/lambda_SFG = 1/lambda_pump + 1/lambda_signal (pump = 1064 nm). QPM periods from Zelmon (1997) Sellmeier equation for MgO:LiNbO3 at 25C.
 
-All SFG outputs land in the 800-870 nm range — silicon APDs work for all of them. No expensive cooled mid-IR detectors needed.
+| Gas | Absorption Peak | QPM Period | SFG Output | Application |
+|-----|----------------|------------|------------|-------------|
+| Methane (CH4) | 3.31 um | 22.0 um | **805 nm** | Pipeline leaks, mining safety |
+| CO2 | 4.26 um | 22.9 um | **851 nm** | Emissions monitoring |
+| CO | 4.67 um | 22.7 um | **867 nm** | Combustion monitoring, safety |
+| H2S | 3.98 um | 22.9 um | **840 nm** | Sour gas detection |
+| Ethane | 3.34 um | 22.1 um | **806 nm** | Natural gas composition |
+
+All SFG outputs land in the 800-870 nm range — silicon APDs work for all of them. No expensive cooled mid-IR detectors needed. CO2 and H2S share nearly identical QPM periods (22.9 um) — one crystal, temperature-tuned.
 
 ## Key Advantages Over Existing Technology
 
@@ -56,7 +58,9 @@ For remote deployments where powered IR sources are impractical:
 
 ## Documentation
 
-- [Target Gases](docs/target-gases.md) — Detailed gas properties and detection specifications
+- [Target Gases](docs/target-gases.md) — Detailed gas properties, QPM periods, and detection specifications
+- [Build Plan](docs/build-plan.md) — Full BOM with part numbers, suppliers, costs, and assembly instructions
+- [Prior Art](docs/prior-art.md) — Published papers and funded projects validating this architecture
 - [Testing Plan](docs/testing-plan.md) — Experimental validation: single-gas through multi-gas prototype
 - [Competition](docs/competition.md) — Detailed comparison with NDIR, TDLAS, QEPAS, FTIR
 - [Passive IR Source](docs/passive-ir-source.md) — Open-path monitoring and passive source concepts
@@ -66,9 +70,13 @@ For remote deployments where powered IR sources are impractical:
 
 - [x] Target gas wavelengths mapped to PPLN parameters
 - [x] SFG output wavelengths confirmed in Si detector range
+- [x] QPM periods calculated from Sellmeier equations (22.0-22.9 um range)
 - [x] Competition analysis complete
-- [ ] Single-gas SFG upconversion experiment (CH4)
-- [ ] Two-gas discrimination experiment (CH4 + CO2)
+- [x] Prior art validated — multiple published systems confirm architecture (see [Prior Art](docs/prior-art.md))
+- [x] Build plan with specific BOM, part numbers, and suppliers (see [Build Plan](docs/build-plan.md))
+- [x] Beer-Lambert sensitivity analysis with path-length projections
+- [ ] Single-gas SFG upconversion experiment (CO2 — start here, strongest cross-section)
+- [ ] Two-gas discrimination experiment (CO2 + CH4)
 - [ ] Multi-gas prototype (4-channel)
 - [ ] Field testing
 
